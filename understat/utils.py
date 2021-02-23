@@ -1,10 +1,10 @@
 import codecs
 import json
 import re
-
+import requests
 from bs4 import BeautifulSoup
 
-from understat.constants import PATTERN
+from constants import PATTERN
 
 
 def to_league_name(league_name):
@@ -25,9 +25,9 @@ def to_league_name(league_name):
         return league_name
 
 
-async def fetch(session, url):
-    async with session.get(url) as response:
-        return await response.text()
+def fetch(url):
+    response = requests.get(url)
+    return response.text
 
 
 def find_match(scripts, pattern):
@@ -49,10 +49,10 @@ def decode_data(match):
 
     return json_data
 
-async def get_data(session, url, data_type):
+def get_data(url, data_type):
     """Returns data from the given URL of the given data type."""
 
-    html = await fetch(session, url)
+    html = fetch(url)
     soup = BeautifulSoup(html, "html.parser")
     scripts = soup.find_all("script")
 
