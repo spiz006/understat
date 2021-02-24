@@ -4,7 +4,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
-from constants import PATTERN
+from understat.constants import PATTERN
 
 
 def to_league_name(league_name):
